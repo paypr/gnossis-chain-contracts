@@ -17,16 +17,26 @@
  * along with Paypr Ethereum Contracts.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-module.exports = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
-  testTimeout: 120_000,
-  cacheDirectory: './tmp/',
-  setupFilesAfterEnv: ['./spec/setup/WaffleSetup.ts', './spec/setup/EthersSetup.ts'],
-  globals: {
-    'ts-jest': {
-      tsconfig: './spec/tsconfig.json',
-      isolatedModules: true,
+import '@nomiclabs/hardhat-ethers';
+import '@nomiclabs/hardhat-waffle';
+import '@typechain/hardhat';
+import { HardhatUserConfig } from 'hardhat/config';
+
+const hardhatConfig: HardhatUserConfig = {
+  solidity: {
+    version: '0.8.9',
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200,
+      },
     },
   },
+
+  typechain: {
+    outDir: 'types/contracts',
+    target: 'ethers-v5',
+  },
 };
+
+export default hardhatConfig;
