@@ -1,4 +1,4 @@
-# CHANGEME
+# Gnossis Chain Contracts
 
 ## Setup
 
