@@ -21,13 +21,16 @@ import { BytesLike } from '@ethersproject/bytes';
 import { ZERO_ADDRESS } from '@paypr/ethereum-contracts/dist/src/contracts/accounts';
 import ContractAddress from '@paypr/ethereum-contracts/dist/src/contracts/ContractAddress';
 import { DiamondInitFunction } from '@paypr/ethereum-contracts/dist/src/contracts/diamonds';
+import { LikeInterface } from '@paypr/ethereum-contracts/dist/src/contracts/interfaces';
 import { BigNumberish } from 'ethers';
-import { IAMB, ITokenMediator, TokenMediatorInit } from '../../types/contracts';
-import { ZERO_CHAIN_ID } from './mediator';
+import { ITokenMediator, TokenMediatorInit } from '../../types/contracts';
+import { AMBLike, ZERO_CHAIN_ID } from './mediator';
+
+export type TokenMediatorLike = LikeInterface<ITokenMediator>;
 
 export interface TokenMediatorInitData {
-  bridge: IAMB;
-  remoteMediator?: ITokenMediator;
+  bridge: AMBLike;
+  remoteMediator?: TokenMediatorLike;
   remoteChainId?: BytesLike;
   requestGasLimit: BigNumberish;
   tokens?: TokenMediatorTokenInfo[];
@@ -76,7 +79,7 @@ export const encodeTokenMediatorInitSetRequestGasLimitCallData = (
 
 export const buildTokenMediatorInitSetRemoteMediatorFunction = (
   tokenMediatorInit: TokenMediatorInit,
-  remoteMediator: ITokenMediator,
+  remoteMediator: TokenMediatorLike,
   remoteChainId: BytesLike,
 ): DiamondInitFunction => ({
   initAddress: tokenMediatorInit.address,
@@ -85,7 +88,7 @@ export const buildTokenMediatorInitSetRemoteMediatorFunction = (
 
 export const encodeTokenMediatorInitSetRemoteMediatorCallData = (
   mediatorInit: TokenMediatorInit,
-  remoteMediator: ITokenMediator,
+  remoteMediator: TokenMediatorLike,
   remoteChainId: BytesLike,
 ) => mediatorInit.interface.encodeFunctionData('setRemoteMediator', [remoteMediator.address, remoteChainId]);
 

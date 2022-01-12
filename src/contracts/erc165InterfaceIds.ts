@@ -17,10 +17,7 @@
  * along with Paypr Ethereum Contracts.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { Erc165InterfaceId } from '@paypr/ethereum-contracts/dist/src/contracts/erc165';
-import { hexlify, zeroPad } from 'ethers/lib/utils';
+import { toErc165InterfaceId } from '@paypr/ethereum-contracts/dist/src/contracts/erc165InterfaceIds';
 
-const toByte4String = (value: number): Erc165InterfaceId => hexlify(zeroPad(hexlify(value), 4));
-
-export const AMB_INFORMATION_RECEIVER_INTERFACE_ID = toByte4String(0xf534de5b);
-export const TOKEN_MEDIATOR_INTERFACE_ID = toByte4String(0x3756c9a5);
+export const AMB_INFORMATION_RECEIVER_INTERFACE_ID = toErc165InterfaceId(0xf534de5b);
+export const TOKEN_MEDIATOR_INTERFACE_ID = toErc165InterfaceId(0x3756c9a5);

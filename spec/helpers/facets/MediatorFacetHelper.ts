@@ -20,11 +20,10 @@
 import { buildDiamondFacetCut } from '@paypr/ethereum-contracts/dist/src/contracts/diamonds';
 import { TypedEvent } from '@typechain/ethers-v5/static/common';
 import { BytesLike, Contract, ContractReceipt } from 'ethers';
-import { buildMediatorInitSetBridgeFunction, toByte32String } from '../../../src/contracts/mediator';
+import { AMBLike, buildMediatorInitSetBridgeFunction, toChainId } from '../../../src/contracts/mediator';
 import {
   AMBInformationAccessFacet__factory,
   AMBInformationReceiverFacet__factory,
-  IAMB,
   IAMBInformationAccess__factory,
   IAMBInformationReceiver__factory,
   MediatorInit__factory,
@@ -35,8 +34,8 @@ import { GetInformationEvent, PassMessageEvent, TestAMBInterface } from '../../.
 import { INITIALIZER } from '../Accounts';
 import { combineExtensibleDiamondOptions, createDiamond, ExtensibleDiamondOptions } from '../DiamondHelper';
 
-export const PRIMARY_CHAIN_ID = toByte32String(1001);
-export const SECONDARY_CHAIN_ID = toByte32String(2001);
+export const PRIMARY_CHAIN_ID = toChainId(1001);
+export const SECONDARY_CHAIN_ID = toChainId(2001);
 
 export const asAMBInformationReceiver = (contract: Contract) =>
   IAMBInformationReceiver__factory.connect(contract.address, INITIALIZER);
@@ -47,7 +46,7 @@ export const asAMBInformationAccess = (contract: Contract) =>
 export const asTestAMBInformationRequester = (contract: Contract) =>
   TestAMBInformationRequesterFacet__factory.connect(contract.address, INITIALIZER);
 
-export const createAMBInformationReceiver = async (bridge: IAMB, options: ExtensibleDiamondOptions = {}) =>
+export const createAMBInformationReceiver = async (bridge: AMBLike, options: ExtensibleDiamondOptions = {}) =>
   asAMBInformationReceiver(
     await createDiamond(
       combineExtensibleDiamondOptions(
@@ -64,25 +63,25 @@ export const createAMBInformationReceiver = async (bridge: IAMB, options: Extens
     ),
   );
 
-export const findTestAMBPassMessageEvent = (bridge: IAMB, contractReceipt: ContractReceipt) =>
+export const findTestAMBPassMessageEvent = (bridge: AMBLike, contractReceipt: ContractReceipt) =>
   findTestAMBEvent<PassMessageEvent>(
     bridge,
     contractReceipt,
     'PassMessage(address,bytes32,address,bytes,uint256,bytes32)',
   );
 
-export const getTestAMBGetInformationEventMessageId = (bridge: IAMB, contractReceipt: ContractReceipt) =>
+export const getTestAMBGetInformationEventMessageId = (bridge: AMBLike, contractReceipt: ContractReceipt) =>
   findTestAMBGetInformationEvent(bridge, contractReceipt)!.args.messageId;
 
-export const findTestAMBGetInformationEvent = (bridge: IAMB, contractReceipt: ContractReceipt) =>
+export const findTestAMBGetInformationEvent = (bridge: AMBLike, contractReceipt: ContractReceipt) =>
   findTestAMBEvent<GetInformationEvent>(
     bridge,
     contractReceipt,
     'GetInformation(address,bytes32,bytes32,bytes,bytes32,bool,bytes)',
   );
 
-const findTestAMBEvent = <E extends TypedEvent<any>>(
-  bridge: IAMB,
+const findTestAMBEvent = <E extends TypedEvent>(
+  bridge: AMBLike,
   contractReceipt: ContractReceipt,
   eventName: keyof TestAMBInterface['events'],
 ): E | undefined => {

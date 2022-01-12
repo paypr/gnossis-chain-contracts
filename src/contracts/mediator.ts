@@ -19,20 +19,28 @@
 
 import { BytesLike } from '@ethersproject/bytes';
 import ContractAddress from '@paypr/ethereum-contracts/dist/src/contracts/ContractAddress';
+import { toByte32String } from '@paypr/ethereum-contracts/dist/src/contracts/fixedBytes';
 import { DiamondInitFunction } from '@paypr/ethereum-contracts/dist/src/contracts/diamonds';
-import { hexlify, zeroPad } from 'ethers/lib/utils';
+import { LikeInterface } from '@paypr/ethereum-contracts/dist/src/contracts/interfaces';
 import { IAMB, MediatorInit } from '../../types/contracts';
 
-export const toByte32String = (value: number): string => hexlify(zeroPad(hexlify(value), 32));
+export type ChainId = string;
 
-export const ZERO_CHAIN_ID = toByte32String(0);
+export const toChainId = (value: number): ChainId => toByte32String(value);
 
-export const buildMediatorInitSetBridgeFunction = (mediatorInit: MediatorInit, bridge: IAMB): DiamondInitFunction => ({
+export const ZERO_CHAIN_ID = toChainId(0);
+
+export type AMBLike = LikeInterface<IAMB>;
+
+export const buildMediatorInitSetBridgeFunction = (
+  mediatorInit: MediatorInit,
+  bridge: AMBLike,
+): DiamondInitFunction => ({
   initAddress: mediatorInit.address,
   callData: encodeMediatorInitSetBridgeCallData(mediatorInit, bridge),
 });
 
-export const encodeMediatorInitSetBridgeCallData = (mediatorInit: MediatorInit, bridge: IAMB) =>
+export const encodeMediatorInitSetBridgeCallData = (mediatorInit: MediatorInit, bridge: AMBLike) =>
   mediatorInit.interface.encodeFunctionData('setBridge', [bridge.address]);
 
 export const buildMediatorAddAllowedSenderFunction = (

@@ -17,17 +17,17 @@
  * along with Paypr Ethereum Contracts.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { ConsumableLike } from '@paypr/ethereum-contracts/dist/src/contracts/consumables';
 import { buildDiamondFacetCut } from '@paypr/ethereum-contracts/dist/src/contracts/diamonds';
-import { IConsumable } from '@paypr/ethereum-contracts/dist/types/contracts';
 import { BigNumberish, BytesLike, Contract } from 'ethers';
+import { AMBLike } from '../../../src/contracts/mediator';
 import {
   buildTokenMediatorInitInitializeFunction,
   buildTokenMediatorInitSetRemoteMediatorFunction,
   TokenMediatorInitData,
+  TokenMediatorLike,
 } from '../../../src/contracts/tokenMediator';
 import {
-  IAMB,
-  ITokenMediator,
   ITokenMediator__factory,
   TokenMediatorFacet__factory,
   TokenMediatorInit__factory,
@@ -52,8 +52,8 @@ export const createTokenMediator = async (initData: TokenMediatorInitData, optio
   );
 
 export const setRemoteTokenMediator = async (
-  tokenMediator: ITokenMediator,
-  remoteMediator: ITokenMediator,
+  tokenMediator: TokenMediatorLike,
+  remoteMediator: TokenMediatorLike,
   chainId: BytesLike,
 ) => {
   await cutDiamond(
@@ -64,10 +64,10 @@ export const setRemoteTokenMediator = async (
 };
 
 export interface PrimaryAndSecondaryTokenMediatorConfig {
-  primaryBridge: IAMB;
-  primaryConsumable: IConsumable;
-  secondaryBridge: IAMB;
-  secondaryConsumable: IConsumable;
+  primaryBridge: AMBLike;
+  primaryConsumable: ConsumableLike;
+  secondaryBridge: AMBLike;
+  secondaryConsumable: ConsumableLike;
   requestGasLimit?: BigNumberish;
   secondaryMintAndBurn?: boolean;
 }

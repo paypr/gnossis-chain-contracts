@@ -18,11 +18,11 @@
  */
 
 import { buildDiamondFacetCut } from '@paypr/ethereum-contracts/dist/src/contracts/diamonds';
+import { toByte32String } from '@paypr/ethereum-contracts/dist/src/contracts/fixedBytes';
 import { MINTER_ROLE } from '@paypr/ethereum-contracts/dist/src/contracts/roles';
 import { BigNumber } from 'ethers';
 import { ContractTransaction } from 'ethers/lib/ethers';
 import { TOKEN_MEDIATOR_INTERFACE_ID } from '../../../../src/contracts/erc165InterfaceIds';
-import { toByte32String } from '../../../../src/contracts/mediator';
 import { PLAYER1, PLAYER2 } from '../../../helpers/Accounts';
 import { deployDiamond } from '../../../helpers/DiamondHelper';
 import { shouldSupportInterface } from '../../../helpers/ERC165Helper';

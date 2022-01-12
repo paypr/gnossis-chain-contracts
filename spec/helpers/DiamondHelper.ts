@@ -29,8 +29,9 @@ import {
   buildErc165SetSupportedInterfacesDiamondInitFunction,
   Erc165InterfaceId,
 } from '@paypr/ethereum-contracts/dist/src/contracts/erc165';
+import { LikeInterface } from '@paypr/ethereum-contracts/dist/src/contracts/interfaces';
 import { DIAMOND_CUTTER_ROLE } from '@paypr/ethereum-contracts/dist/src/contracts/roles';
-import { Diamond__factory, DiamondInit, IDiamondCut__factory } from '@paypr/ethereum-contracts/dist/types/contracts';
+import { Diamond__factory, DiamondInit } from '@paypr/ethereum-contracts/dist/types/contracts';
 import { Contract } from 'ethers';
 import { DIAMOND_CUTTER, INITIALIZER } from './Accounts';
 import {
@@ -40,7 +41,7 @@ import {
   deployAccessControlCheckFacet,
   deployAccessControlFacet,
 } from './facets/AccessControlFacetHelper';
-import { deployDiamondCutFacet, deployDiamondInit } from './facets/DiamondFacetHelper';
+import { asDiamondCut, deployDiamondCutFacet, deployDiamondInit } from './facets/DiamondFacetHelper';
 import { deployErc165Facet, deployErc165Init } from './facets/ERC165FacetHelper';
 
 export const deployDiamond = (
@@ -92,10 +93,10 @@ export const createDiamond = async (options: CreateDiamondOptions = {}) => {
 };
 
 export const cutDiamond = (
-  diamond: Contract,
+  diamond: LikeInterface<Contract>,
   diamondCuts: DiamondFacetCut[],
   initFunction: DiamondInitFunction = emptyDiamondInitFunction,
-) => IDiamondCut__factory.connect(diamond.address, DIAMOND_CUTTER).diamondCut(diamondCuts, initFunction);
+) => asDiamondCut(diamond.address).diamondCut(diamondCuts, initFunction);
 
 export const combineDiamondInitFunctions = async (
   initFunctions: DiamondInitFunction[],
