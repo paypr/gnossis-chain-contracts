@@ -23,10 +23,11 @@ import { toByte32String } from '@paypr/ethereum-contracts/dist/src/contracts/fix
 import { DiamondInitFunction } from '@paypr/ethereum-contracts/dist/src/contracts/diamonds';
 import { LikeInterface } from '@paypr/ethereum-contracts/dist/src/contracts/interfaces';
 import { IAMB, MediatorInit } from '../../types/contracts';
+import { Hexable } from 'ethers/lib/utils';
 
 export type ChainId = string;
 
-export const toChainId = (value: number): ChainId => toByte32String(value);
+export const toChainId = (value: BytesLike | Hexable | number): ChainId => toByte32String(value);
 
 export const ZERO_CHAIN_ID = toChainId(0);
 
