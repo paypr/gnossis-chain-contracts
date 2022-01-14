@@ -33,7 +33,9 @@
     }
   },
   "dependencies": {
-    "@paypr/ethereum-contracts": "0.3.13"
+    "@openzeppelin/contracts": "4.4.0",
+    "@paypr/ethereum-contracts": "0.3.13",
+    "ethers": "5.5.3"
   },
   "devDependencies": {
     "@ethereum-waffle/jest": "3.3.0",
