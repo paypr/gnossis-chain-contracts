@@ -29,7 +29,6 @@ import {
   buildErc165SetSupportedInterfacesDiamondInitFunction,
   Erc165InterfaceId,
 } from '@paypr/ethereum-contracts/dist/src/contracts/erc165';
-import { LikeInterface } from '@paypr/ethereum-contracts/dist/src/contracts/interfaces';
 import { DIAMOND_CUTTER_ROLE } from '@paypr/ethereum-contracts/dist/src/contracts/roles';
 import { Diamond__factory, DiamondInit } from '@paypr/ethereum-contracts/dist/types/contracts';
 import { Contract } from 'ethers';
@@ -93,10 +92,10 @@ export const createDiamond = async (options: CreateDiamondOptions = {}) => {
 };
 
 export const cutDiamond = (
-  diamond: LikeInterface<Contract>,
+  diamond: Contract,
   diamondCuts: DiamondFacetCut[],
   initFunction: DiamondInitFunction = emptyDiamondInitFunction,
-) => asDiamondCut(diamond.address).diamondCut(diamondCuts, initFunction);
+) => asDiamondCut(diamond).diamondCut(diamondCuts, initFunction);
 
 export const combineDiamondInitFunctions = async (
   initFunctions: DiamondInitFunction[],

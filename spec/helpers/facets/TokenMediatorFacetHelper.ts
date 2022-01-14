@@ -52,8 +52,8 @@ export const createTokenMediator = async (initData: TokenMediatorInitData, optio
   );
 
 export const setRemoteTokenMediator = async (
-  tokenMediator: TokenMediatorLike,
-  remoteMediator: TokenMediatorLike,
+  tokenMediator: TokenMediatorLike & Contract,
+  remoteMediator: TokenMediatorLike & Contract,
   chainId: BytesLike,
 ) => {
   await cutDiamond(
