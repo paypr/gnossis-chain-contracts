@@ -62,7 +62,7 @@
     "eslint-plugin-prettier": "4.0.0",
     "ethereum-waffle": "3.4.0",
     "hardhat": "2.8.2",
-    "husky": "7.0.4",
+    "husky": "8.0.1",
     "jest": "27.4.7",
     "jest-junit": "13.0.0",
     "prettier": "2.5.1",
