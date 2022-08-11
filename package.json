@@ -3,7 +3,7 @@
   "name": "@paypr/gnossis-chain-contracts",
   "description": "",
   "license": "GPL-3.0",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "homepage": "https://paypr.money/",
   "repository": {
     "type": "git",
