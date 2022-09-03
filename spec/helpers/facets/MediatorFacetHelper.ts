@@ -30,7 +30,11 @@ import {
   TestAMB__factory,
   TestAMBInformationRequesterFacet__factory,
 } from '../../../types/contracts';
-import { GetInformationEvent, PassMessageEvent, TestAMBInterface } from '../../../types/contracts/TestAMB';
+import {
+  GetInformationEvent,
+  PassMessageEvent,
+  TestAMBInterface,
+} from '../../../types/contracts/contracts/facets/mediator/test/TestAMB';
 import { INITIALIZER } from '../Accounts';
 import { combineExtensibleDiamondOptions, createDiamond, ExtensibleDiamondOptions } from '../DiamondHelper';
 
